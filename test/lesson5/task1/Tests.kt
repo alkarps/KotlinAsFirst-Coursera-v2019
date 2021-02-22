@@ -152,6 +152,10 @@ class Tests {
             whoAreInBoth(listOf("Marat", "Mikhail"), listOf("Marat", "Kirill"))
         )
         assertEquals(
+            listOf(""),
+            whoAreInBoth(listOf("", ""), listOf(""))
+        )
+        assertEquals(
             emptyList<String>(),
             whoAreInBoth(listOf("Marat", "Mikhail"), listOf("Sveta", "Kirill"))
         )
@@ -233,7 +237,12 @@ class Tests {
     @Tag("Normal")
     fun canBuildFrom() {
         assertFalse(canBuildFrom(emptyList(), "foo"))
+        assertTrue(canBuildFrom(emptyList(), ""))
+        assertFalse(canBuildFrom(emptyList(), " "))
+        assertTrue(canBuildFrom(listOf('a'), ""))
+        assertTrue(canBuildFrom(listOf('A'), "a"))
         assertTrue(canBuildFrom(listOf('a', 'b', 'o'), "baobab"))
+        assertTrue(canBuildFrom(listOf('a', 'z'), "a"))
         assertFalse(canBuildFrom(listOf('a', 'm', 'r'), "Marat"))
     }
 
@@ -275,6 +284,21 @@ class Tests {
                 mapOf(
                     "Marat" to setOf("Sveta"),
                     "Sveta" to setOf("Mikhail")
+                )
+            )
+        )
+        assertEquals(
+            mapOf(
+                "0" to setOf("2", "3"),
+                "2" to setOf("3"),
+                "1" to setOf("0", "2", "3"),
+                "3" to setOf()
+            ),
+            propagateHandshakes(
+                mapOf(
+                    "0" to setOf("2"),
+                    "2" to setOf("3"),
+                    "1" to setOf("0")
                 )
             )
         )
@@ -326,6 +350,30 @@ class Tests {
             bagPacking(
                 mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
                 450
+            )
+        )
+        assertEquals(
+            setOf("5", "4", "3", "2", "1", "0"),
+            bagPacking(
+                mapOf(
+                    "0" to (482 to 3), "1" to (1 to 1), "2" to (1 to 1), "3" to (457 to 3), "4" to (168 to 2),
+                    "5" to (499 to 65), "6" to (1 to 1), "7" to (1 to 1)
+                ),
+                1608
+            )
+        )
+        assertEquals(
+            setOf("18", "12"),
+            bagPacking(
+                mapOf(
+                    "0" to (1 to 1), "1" to (1 to 1), "2" to (1 to 1), "3" to (1 to 1), "4" to (2 to 478),
+                    "5" to (1 to 1), "6" to (1 to 1), "7" to (1 to 1), "8" to (1 to 1), "9" to (1 to 1),
+                    "10" to (1 to 1), "11" to (1 to 1), "12" to (1 to 72), "13" to (1 to 1), "14" to (1 to 1),
+                    "15" to (1 to 1), "16" to (1 to 1), "17" to (1 to 1), "18" to (1 to 437), "19" to (1 to 1),
+                    "20" to (1 to 1), "21" to (1 to 1), "22" to (1 to 1), "23" to (1 to 1), "24" to (1 to 1),
+                    "25" to (1 to 1), "26" to (1 to 1), "27" to (1 to 1), "28" to (1 to 1), "29" to (1 to 1)
+                ),
+                2
             )
         )
     }

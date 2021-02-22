@@ -16,3 +16,4 @@ report/*
 *.ipr
 *.iws
 *.zip
+.DS_Store
